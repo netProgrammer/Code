@@ -36,22 +36,30 @@ namespace Eratosthenes
 
         private static void Sieve()
         {
-            for (var j = 0; j < Math.Sqrt(_workArray.Length) + 1; j++)
+            for (var j = 0; j < CalcMaxPrimeFactor(); j++)
             {
-                if (_workArray[j])
-                {
-                    for (var i = 2*j; i < _workArray.Length; i += j)
-                    {
-                        _workArray[i] = false;
-                    }
+                if (_workArray[j]){
+                    CrossOutputMultiplesOf(j);
                 }
             }
+        }
+
+        private static void CrossOutputMultiplesOf(int j)
+        {
+            for (var i = 2 * j; i < _workArray.Length; i += j)
+            {
+                _workArray[i] = false;
+            }
+        }
+
+        private static int CalcMaxPrimeFactor()
+        {
+            return (int) (Math.Sqrt(_workArray.Length) + 1);
         }
 
         private static void InitArray(int maxValue)
         {
             _workArray = new bool[maxValue + 1];
-            _workArray[0] = _workArray[1] = false; //exclude not prime numbers
             for (var i = 2; i < _workArray.Length; i++)
             {
                 _workArray[i] = true;
